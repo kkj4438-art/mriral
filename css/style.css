@@ -1,0 +1,1096 @@
+/* ======================== */
+/* 0. 초기화 및 기본 설정 */
+/* ======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #F66F4D; /* 보라색 계열 (예시) */
+    --color-accent: #FFD700; /* 노란색 계열 (예시) */
+    --color-text: #333;
+    --color-background: #FFF8E7; /* 밝은 베이지 배경 */
+    --color-white: #fff;
+    --color-gray: #666;
+    --color-light-gray: #eee;
+    --color-light-beige: #FAF8ED; /* 메뉴보기 텍스트/아이콘 색상 (추가) */
+    --color-black: #000; /* 메뉴보기 배경색 (추가) */
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* ======================== */
+/* 1. 레이아웃 및 헤더 */
+/* ======================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+}
+
+.header-inner {
+    /* 요청 반영: 헤더 내부 컨테이너 최대 넓이 1440px로 수정 */
+    max-width: 1440px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 15px; 
+}
+
+/* 로고와 메뉴를 묶는 그룹 */
+.header-left-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -50px;
+}
+
+.logo {
+    padding-left: 50px;
+}
+
+.logo .logo-img {
+    height: 36px;
+    width: auto;
+}
+
+/* --- Navigation & Mega Menu (수정된 부분) --- */
+.main-nav {
+    /* 서브 메뉴의 부모 요소로 사용되므로 relative 유지 */
+    position: relative; 
+    margin-right: 0; 
+}
+
+.main-menu {
+    display: flex;
+    gap: 5px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-item > a {
+    display: block;
+    padding: 8px 10px;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.menu-item > a:hover {
+    color: var(--color-primary);
+}
+
+/* 요청 반영: 서브 메뉴 전체를 덮는 하나의 큰 블록 */
+.sub-menu-area {
+    position: absolute;
+    top: 100%; 
+    
+    /* 수정: 메뉴의 왼쪽 끝에 맞추어 시작하도록 설정 */
+    left: 0; 
+    
+    /* 너비를 콘텐츠에 맞게 설정하거나 원하는 최대 너비 설정 */
+    width: auto; 
+    min-width: 800px; /* 서브 메뉴가 충분히 넓게 보이도록 최소 너비 유지 */
+    
+    /* 중앙 정렬 속성 제거 */
+    transform: none; 
+    
+    background-color: var(--color-white);
+    border-top: 2px solid var(--color-primary);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* 내부 요소의 패딩 */
+    
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height 0.4s ease, opacity 0.4s ease;
+    z-index: 900;
+}
+
+.sub-menu-inner {
+    /* 중앙 정렬을 위해 max-width와 margin: 0 auto 사용 */
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    /* 서브 메뉴 컬럼들을 공간을 두고 정렬 */
+    justify-content: space-around; 
+    gap: 30px; 
+    padding: 0 20px; /* 내부 요소의 좌우 패딩 */
+}
+
+.sub-menu-col {
+    width: 150px; /* 각 서브 메뉴 컬럼의 너비를 더 줄임 */
+}
+
+.sub-menu-col li {
+    padding: 4px 0;
+}
+
+.sub-menu-col a {
+    display: block;
+    font-size: 14px;
+    color: var(--color-gray);
+    padding: 4px 0;
+}
+
+.sub-menu-col a:hover {
+    color: var(--color-primary);
+}
+
+.sub-menu-title a {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-text);
+    margin-bottom: 5px;
+}
+.sub-menu-title a:hover {
+    color: var(--color-primary);
+    background: none;
+}
+
+.main-nav:hover .sub-menu-area {
+    height: 200px; /* 메뉴 높이에 맞춰 적절히 조정 */
+    opacity: 1;
+    overflow: visible;
+}
+
+/* --- User Area (메뉴보기 버튼) --- */
+.user-area {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 0; 
+}
+
+.btn-view-menu {
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    /* 요청 반영: 위 아래 사이즈 확대 (12px 0 -> 15px 0) */
+    padding: 15px 0; 
+    
+    background-color: var(--color-black);
+    color: var(--color-light-beige);
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-view-menu:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.btn-view-menu i {
+    font-size: 18px;
+    color: var(--color-light-beige);
+}
+
+/* ======================== */
+/* 2. 섹션 공통 스타일 (이하 동일) */
+/* (나머지 스타일은 이전과 동일하게 유지됩니다.) */
+/* ======================== */
+main {
+    padding-top: 65px; 
+}
+
+section {
+    padding: 80px 20px;
+    /* 요청 반영: 모든 섹션 컨테이너 최대 넓이 1440px로 수정 */
+    max-width: 1440px; 
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* ... (나머지 섹션 스타일은 생략하고 기존 코드와 동일하게 유지) ... */
+
+/* ======================== */
+/* 3. Hero (Swiper 제거 후 정적 스타일) */
+/* ======================== */
+.section-hero {
+    padding: 0;
+    max-width: 100%; /* Hero 섹션은 화면 전체 너비에 가까워야 하므로 100%로 유지하고, 내부 콘텐츠만 1440px로 제한 */
+    margin-bottom: 50px;
+    height: 720px; 
+    background-color: #F4E8D2; 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-content-wrapper {
+    /* 요청 반영: Hero 내부 콘텐츠 컨테이너 최대 넓이 1440px로 수정 */
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 50px; 
+}
+
+.text-content {
+    flex: 1;
+    max-width: 50%;
+}
+
+.text-content h2 {
+    font-size: 56px;
+    line-height: 1.1;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.text-content h2 strong {
+    color: var(--color-primary);
+}
+
+.cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mock-input-search {
+    display: flex;
+    align-items: center;
+    background: var(--color-white);
+    border-radius: 8px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 아이콘 사용 (Phosphor Icons CDN이 HTML에 포함되어 있습니다.) */
+.mock-input-search i {
+    color: var(--color-primary);
+    font-size: 18px;
+}
+.mock-input-search button i {
+    font-size: 18px;
+    color: #888;
+}
+
+.mock-input-search input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.mock-input-search button {
+    color: #888;
+}
+
+.cta-links {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-find-store, .btn-delivery {
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-find-store {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+.btn-delivery {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chef-image-placeholder {
+    width: 550px; 
+    height: 550px;
+    /* border-radius: 50%; */
+    border-radius: 8px;
+    /* background: #FFEFCC; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 8px solid var(--color-white); */
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+    position: relative;
+    overflow: hidden; 
+}
+
+.chef-img-mock {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* background-color: #FFEFCC;  */
+    /* border-radius: 50%; */
+    border-radius: 8px;
+    opacity: 1; 
+    
+    /* 🔴 추가/수정: 이미지의 위치를 조정하여 윗부분이 잘리지 않도록 합니다. */
+    /* 기본값은 center center; 이며, Y축을 아래로 5% 이동하여 윗부분을 더 보이게 합니다. */
+    object-position: center 5%; /* Y축을 5% 아래로 이동 */
+    /* 또는 object-position: 50% 5%; 로도 표현 가능합니다. */
+    /* 필요에 따라 5% 대신 10% 등 값을 조절해 보세요. */
+}
+
+/* Swiper Navigation & Pagination */
+.hero-pagination {
+    bottom: 20px !important;
+}
+
+.hero-next, .hero-prev {
+    color: var(--color-primary) !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.hero-next::after, .hero-prev::after {
+    font-size: 20px !important;
+    font-weight: bold;
+}
+
+/* ======================== */
+/* 4. FRANK MENU */
+/* ======================== */
+.section-menu {
+    background-color: var(--color-background);
+    /* 요청 반영: Menu 섹션의 최대 넓이 1440px로 수정 */
+    max-width: 1440px;
+}
+
+/* 요청 반영: 제목과 내비게이션을 담을 박스 스타일 (동일 유지) */
+.menu-header-box {
+    width: 100%;
+    height: 132px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 섹션 타이틀 스타일 재정의 (동일 유지) */
+.section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: left;
+    margin: 0; 
+}
+
+.menu-list-wrapper {
+    position: relative;
+    padding-bottom: 40px; 
+    margin-top: 20px;
+}
+
+.menu-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu-item {
+    text-align: center;
+    /* menu-item의 넓이를 170px로 설정 */
+    width: 170px;
+    overflow: visible; 
+    /* 🔴 수정: 가상 요소를 위한 position: relative; 추가 */
+    position: relative; 
+    /* 이미지 확대 시 overflow: hidden으로 잘리지 않도록 visible 유지 */
+}
+
+.menu-list .menu-item::before { /* <<-- 선택자 수정! */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 170px;
+    height: 260px;
+    background-color: var(--color-black); 
+    border-radius: 2000px; 
+    opacity: 0; 
+    transition: opacity 0.3s ease, transform 0.3s ease; 
+    z-index: 20;
+    pointer-events: none;
+}
+
+.menu-item img {
+    margin: 0 auto 10px auto; 
+    display: block;
+    
+    /* 이미지 크기를 넓이 170px, 높이 260px로 설정 */
+    width: 170px;
+    height: 260px;
+    
+    object-fit: cover;
+    border-radius: 2000px; 
+    
+    opacity: 1; 
+    background-color: #ccc; 
+    
+    /* 🔴 수정: 호버 시 transform: scale(1.2); 에 맞추어 오버레이도 함께 확대 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    cursor: pointer; 
+    position: relative; /* z-index를 주기 위해 relative 설정 */
+    z-index: 10;
+}
+
+/* 마우스 오버 시 이미지 20% 확대 효과는 유지 */
+.menu-item:hover img {
+    transform: scale(1.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.menu-list .menu-item:hover::before { /* <<-- 선택자 수정! */
+    opacity: 0.5; 
+    transform: scale(1.2); 
+}
+
+/* 메뉴 이름은 오버레이 위에 보이도록 z-index를 높여줍니다. (기존 p 태그의 z-index가 낮을 경우 대비) */
+.menu-list .menu-item p {
+    position: relative;
+    z-index: 30; 
+}
+
+.menu-name {
+    font-weight: 600;
+}
+
+/* 기존의 .menu-nav는 .menu-header-box 안으로 이동 */
+.menu-header-box .menu-nav {
+    position: static; /* absolute 속성 해제 */
+    transform: none; /* 중앙 정렬 해제 */
+    display: flex;
+    gap: 15px;
+}
+
+.menu-header-box .menu-nav button {
+    /* 기존 버튼 스타일 유지 */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-header-box .menu-nav i {
+    font-size: 20px;
+}
+
+/* ======================== */
+/* 5. Events Section (section-event-hero 만 수정) */
+/* ======================== */
+
+/* 🔴 section-event-hero: 배경색 FAF8ED 적용 */
+.section-event-hero {
+    background-color: #FAF8ED; 
+    padding: 80px 0; /* 🔴 수정: 좌우 패딩을 0으로 제거하여 배경색이 100% 채워지도록 합니다. */
+    
+    /* 🔴 수정: max-width를 100%로 설정하여 섹션 배경이 화면 전체를 덮도록 합니다. */
+    max-width: 100%; 
+    
+    margin: 0 auto;
+}
+
+.event-hero {
+    /* 🔴 수정: 내부 콘텐츠를 1440px로 제한하고 중앙에 배치합니다. */
+    max-width: 1440px; 
+    margin: 0 auto;
+    
+    display: flex;
+    align-items: center;
+    gap: 80px; 
+    background-color: transparent; 
+    
+    /* 🔴 추가: 1440px 콘텐츠 내부에 좌우 패딩을 추가하여 내용이 가장자리에 붙지 않게 합니다. */
+    padding: 0 20px; 
+    
+    border-radius: 0; 
+}
+
+.chef-image-circle {
+    /* 이미지 크기 조정 (400px x 400px) */
+    width: 400px; 
+    height: 400px;
+    
+    /* 🔴 수정: 원형(50%)을 제거하고 사각형(약간 둥근 모서리)으로 변경 */
+    border-radius: 8px; /* 완전히 각진 사각형을 원하시면 0px로 변경하세요. */
+    
+    /* 배경색은 이미지 뒤의 밝은 노란색/베이지색을 가정 */
+    /* background: #FFF0CC;  */
+    border: none;
+    box-shadow: none;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.chef-img-mock {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 🔴 수정: 이미지도 사각형 컨테이너에 맞춰 border-radius를 조정 */
+    border-radius: 8px; /* chef-image-circle과 동일하게 적용 */
+    /* background-color: #FFF0CC;  */
+    opacity: 1; 
+    object-position: center 5%; 
+}
+
+.event-intro {
+    flex-grow: 1;
+    max-width: 500px; /* 텍스트 블록의 최대 넓이 제한 */
+}
+
+/* Our Experience */
+.event-subtitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FF5733; 
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+/* 메인 타이틀 */
+.event-title-main {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--color-text);
+    margin-bottom: 20px;
+}
+
+/* 설명 텍스트 */
+.event-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--color-gray);
+    margin-bottom: 30px;
+}
+
+/* 통계 박스 컨테이너 */
+.event-stats {
+    display: flex;
+    gap: 20px; 
+    margin-top: 20px;
+}
+
+/* 통계 개별 박스 */
+.stat-box {
+    background-color: var(--color-white); 
+    border-radius: 8px;
+    padding: 20px 15px;
+    width: 120px; 
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); 
+}
+
+/* 통계 숫자 */
+.stat-number {
+    display: block;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-primary); 
+    margin-bottom: 5px;
+}
+
+/* 통계 텍스트 (subscribe, great, comment) */
+.stat-text {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-gray);
+}
+
+/* ======================== */
+/* 5. Events Section */
+/* ======================== */
+.section-event-hero {
+    background-color: var(--color-background); 
+    padding: 40px 20px;
+    max-width: 1440px; 
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 50px;
+    /* 🔴 수정: 왼쪽 끝 배치 */
+    text-align: left; 
+}
+
+.event-hero {
+    /* (스타일 동일 유지) */
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #F5EAE0;
+    padding: 30px 40px;
+    border-radius: 10px;
+}
+
+.chef-image-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #FFDDAA;
+    border: 5px solid var(--color-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.event-intro {
+    flex-grow: 1;
+}
+
+.event-title-ko {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.event-stats {
+    display: flex;
+    gap: 30px;
+}
+
+.event-list-wrapper {
+    position: relative;
+}
+
+.section-events-list {
+    padding: 80px 20px;
+    max-width: 1440px;
+    margin: 0 auto;
+    margin-top: 0; 
+}
+
+/* 이벤트 리스트 스타일 (기존 코드 유지) */
+.event-list-wrapper {
+    position: relative;
+    max-width: 1170px; /* 내부 컨테이너의 최대 넓이를 1170px로 추정하고 중앙 정렬 */
+    margin: 0 auto;
+}
+
+.event-list {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; 
+    padding-bottom: 20px;
+    justify-content: center;
+}
+
+.event-item {
+    flex-shrink: 0;
+    width: 362px;
+    text-align: center;
+}
+
+.event-item img {
+    /* 🔴 수정: 이미지 넓이 362px, 높이 147px로 설정 */
+    width: 362px;
+    height: 147px;
+    
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    opacity: 1; 
+    background-color: #ccc; 
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* 흑백 필터 클래스 유지 */
+.event-item img.grayscale-filter {
+    filter: grayscale(100%);
+}
+
+.event-item:hover img.grayscale-filter {
+    filter: grayscale(0%); 
+}
+
+/* Hover 효과 유지 */
+.event-item:hover img:not(.grayscale-filter) {
+    transform: scale(1.05);
+}
+
+.event-caption {
+    font-weight: 600;
+}
+/* 🔴 수정: event-nav 삭제 */
+.event-nav {
+    display: none;
+}
+
+/* ======================== */
+/* 6. SNS Review */
+/* ======================== */
+.section-review {
+    background-color: #FFF8E7;
+}
+
+.review-grid {
+    display: grid;
+    
+    /* 🔴 수정: 넓이 1170px, 높이 526px의 박스 안에 정렬 */
+    max-width: 1170px; /* 컨테이너의 최대 넓이 설정 */
+    height: 526px; /* 컨테이너의 높이 설정 */
+    
+    /* Grid Column: 270px 370px 470px (총 1110px + 40px gap = 1150px) */
+    grid-template-columns: 270px 20px 370px 20px 470px;
+    
+    /* Row: 높이 526px에 맞춥니다. 리뷰 3(526px)이 1행 전체를 차지하도록 합니다. */
+    grid-template-rows: 526px; /* 단일 행으로 설정 (리뷰 3, 5-6 그룹이 이 높이에 맞춰짐) */
+    gap: 20px; 
+    
+    margin: 0 auto; 
+}
+
+.review-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.review-item img {
+    /* 이미지가 부모 아이템을 채우도록 설정 */
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+    opacity: 1; 
+    background-color: #ccc;
+}
+
+.review-item:hover img {
+    transform: scale(1.05);
+}
+
+.review-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: var(--color-white);
+    
+    /* 🔴 수정: 박스 색상 제거 및 패딩 제거 */
+    background: none; 
+    padding: 0; 
+    
+    /* 텍스트가 배경 이미지 위에서도 잘 보이도록 그림자 추가 (선택 사항) */
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8); 
+    
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 🔴 수정: 각 리뷰 아이템의 크기 및 위치 지정 */
+
+/* 리뷰 1, 2는 높이 526px를 분할하여 세로로 배치 */
+.grid-item-1 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    height: 253px; /* 526px / 2 - gap = 253px (대략) */
+}
+.grid-item-2 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    height: 253px; /* 526px / 2 - gap = 253px (대략) */
+}
+
+/* 리뷰 3: 370 x 526 (단일 행 전체 차지) */
+.grid-item-3 {
+    grid-column: 3 / 4;
+    grid-row: 1 / span 1; 
+    height: 526px; /* 명시적 높이 */
+}
+
+/* 리뷰 4: 470 x 250 (상단 절반 차지) */
+.grid-item-4 {
+    grid-column: 5 / 6;
+    grid-row: 1 / 2;
+    height: 253px;
+}
+
+/* 🔴 수정: 리뷰 5, 6을 묶은 그룹 배치 (가로 정렬) */
+.review-item-group.grid-item-5-6 {
+    grid-column: 5 / 6; /* 리뷰 4 아래에 위치 */
+    grid-row: 2 / 3;
+    
+    /* 🔴 수정: 내부 아이템을 가로로 정렬 */
+    display: flex; 
+    flex-direction: row; 
+    gap: 20px; 
+    
+    /* 그룹의 높이는 리뷰 4와 동일한 253px */
+    height: 253px; 
+    align-items: flex-start; /* 상단 정렬 */
+}
+
+/* 🔴 수정: 그룹 내 리뷰 5, 6 개별 아이템의 크기 */
+.review-item-group .grid-item-5 {
+    /* 170 x 263 -> 높이는 그룹 높이에 맞추고 넓이만 조정 */
+    width: 170px; 
+    height: 100%;
+}
+
+.review-item-group .grid-item-6 {
+    /* 270 x 263 -> 높이는 그룹 높이에 맞추고 넓이만 조정 */
+    width: 270px;
+    height: 100%;
+}
+
+/* 🔴 Grid Template Rows 재정의: 리뷰 1/2와 4/5-6 그룹이 균등하게 526px를 나누도록 재구성 */
+.review-grid {
+    /* 253px (리뷰 1, 4) + 20px (gap) + 253px (리뷰 2, 5-6) = 526px */
+    grid-template-rows: 253px 20px 253px; 
+}
+.grid-item-3 {
+    grid-column: 3 / 4;
+    grid-row: 1 / span 3; /* 526px 전체 차지 */
+}
+
+/* ======================== */
+/* 7. Customer Voice */
+/* ======================== */
+.section-customer-voice {
+    background-color: #F5EAE0;
+}
+
+.voice-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.customer-image-circle {
+    /* 🔴 수정: 이미지 박스 크기를 넓이 390px, 높이 539px로 변경 */
+    width: 390px;
+    height: 539px;
+    
+    /* 🔴 수정: 원형 설정을 제거하거나 직사각형에 맞게 조정 */
+    border-radius: 2000px; /* 사각형 모서리를 둥글게 처리 (선택 사항) */
+    
+    background: #FFAA88;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.voice-content {
+    flex-grow: 1;
+}
+
+.quote-title {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.review-box {
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.review-text {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.rating i {
+    color: var(--color-accent);
+}
+
+.review-nav {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.review-nav button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ======================== */
+/* 8. Newsletter */
+/* ======================== */
+.section-newsletter {
+    background-color: #FFECB3;
+    padding: 50px 20px;
+}
+
+.newsletter-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.newsletter-inner p {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.newsletter-inner strong {
+    font-weight: 900;
+}
+
+.newsletter-form {
+    display: flex;
+    background-color: var(--color-white);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form input {
+    flex-grow: 1;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+.newsletter-form button {
+    width: 60px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: 20px;
+    transition: background-color 0.3s;
+}
+
+.newsletter-form button:hover {
+    background-color: #6A1B9A;
+}
+
+/* ======================== */
+/* 9. Footer */
+/* ======================== */
+.footer {
+    background-color: var(--color-white);
+    padding: 30px 20px;
+    border-top: 1px solid #eee;
+}
+
+.footer-inner {
+    /* 요청 반영: 로고와 정보를 왼쪽 끝으로 밀착시키기 위해 flex-start로 조정 */
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* links는 오른쪽 끝에 유지 */
+    align-items: flex-start; /* 상단 정렬 */
+    font-size: 14px;
+    color: var(--color-gray);
+    gap: 50px; /* 주요 섹션 (로고+정보 그룹)과 링크 사이 간격 */
+}
+
+/* 🔴 수정: 푸터 로고 이미지 스타일 */
+.footer-logo {
+    /* 기존 텍스트 스타일 제거 */
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0; /* 축소 방지 */
+    margin-right: 20px; /* info와의 간격 (아래 info에서 마진을 제거하고 flex gap 사용) */
+}
+
+.footer-logo-img {
+    height: 30px; /* 로고 높이 설정 */
+    width: auto;
+    display: block;
+}
+
+/* 🔴 수정: 푸터 정보 스타일 (로고 가까이 붙도록) */
+.footer-info {
+    /* 로고 바로 옆에 붙도록 flex-shrink와 gap을 사용 */
+    flex-grow: 1; 
+    max-width: 600px; /* 정보 영역 최대 넓이 제한 (선택 사항) */
+}
+
+.footer-info p {
+    margin-bottom: 5px;
+}
+
+.footer-links {
+    flex-shrink: 0;
+    text-align: right;
+    margin-left: auto; /* 오른쪽 끝으로 밀기 */
+}
+
+.footer-links a {
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+}

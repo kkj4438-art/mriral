@@ -1,0 +1,556 @@
+/* ======================== */
+/* 0. 초기화 및 기본 설정 */
+/* ======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #F66F4D; /* 보라색 계열 (예시) */
+    --color-accent: #000; /* 노란색 계열 (예시) */
+    --color-text: #333;
+    --color-background: #FFF8E7; /* 밝은 베이지 배경 */
+    --color-white: #fff;
+    --color-gray: #666;
+    --color-light-gray: #eee;
+    --color-light-beige: #FAF8ED; /* 메뉴보기 텍스트/아이콘 색상 (추가) */
+    --color-black: #000; /* 메뉴보기 배경색 (추가) */
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+/* ======================== */
+/* 1. 레이아웃 및 헤더 */
+/* ======================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-white);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+}
+
+.header-inner {
+    /* 요청 반영: 헤더 내부 컨테이너 최대 넓이 1440px로 수정 */
+    max-width: 1440px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 15px; 
+}
+
+/* 로고와 메뉴를 묶는 그룹 */
+.header-left-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: -50px;
+}
+
+.logo {
+    padding-left: 50px;
+}
+
+.logo .logo-img {
+    height: 36px;
+    width: auto;
+}
+
+/* --- Navigation & Mega Menu (수정된 부분) --- */
+.main-nav {
+    /* 서브 메뉴의 부모 요소로 사용되므로 relative 유지 */
+    position: relative; 
+    margin-right: 0; 
+}
+
+.main-menu {
+    display: flex;
+    gap: 5px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+.menu-item > a {
+    display: block;
+    padding: 8px 10px;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.menu-item > a:hover {
+    color: var(--color-primary);
+}
+
+/* 요청 반영: 서브 메뉴 전체를 덮는 하나의 큰 블록 */
+.sub-menu-area {
+    position: absolute;
+    top: 100%; 
+    
+    /* 수정: 메뉴의 왼쪽 끝에 맞추어 시작하도록 설정 */
+    left: 0; 
+    
+    /* 너비를 콘텐츠에 맞게 설정하거나 원하는 최대 너비 설정 */
+    width: auto; 
+    min-width: 800px; /* 서브 메뉴가 충분히 넓게 보이도록 최소 너비 유지 */
+    
+    /* 중앙 정렬 속성 제거 */
+    transform: none; 
+    
+    background-color: var(--color-white);
+    border-top: 2px solid var(--color-primary);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* 내부 요소의 패딩 */
+    
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height 0.4s ease, opacity 0.4s ease;
+    z-index: 900;
+}
+
+.sub-menu-inner {
+    /* 중앙 정렬을 위해 max-width와 margin: 0 auto 사용 */
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    /* 서브 메뉴 컬럼들을 공간을 두고 정렬 */
+    justify-content: space-around; 
+    gap: 30px; 
+    padding: 0 20px; /* 내부 요소의 좌우 패딩 */
+}
+
+.sub-menu-col {
+    width: 150px; /* 각 서브 메뉴 컬럼의 너비를 더 줄임 */
+}
+
+.sub-menu-col li {
+    padding: 4px 0;
+}
+
+.sub-menu-col a {
+    display: block;
+    font-size: 14px;
+    color: var(--color-gray);
+    padding: 4px 0;
+}
+
+.sub-menu-col a:hover {
+    color: var(--color-primary);
+}
+
+.sub-menu-title a {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-text);
+    margin-bottom: 5px;
+}
+.sub-menu-title a:hover {
+    color: var(--color-primary);
+    background: none;
+}
+
+.main-nav:hover .sub-menu-area {
+    height: 200px; /* 메뉴 높이에 맞춰 적절히 조정 */
+    opacity: 1;
+    overflow: visible;
+}
+
+/* --- User Area (메뉴보기 버튼) --- */
+.user-area {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 0; 
+}
+
+.btn-view-menu {
+    width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    /* 요청 반영: 위 아래 사이즈 확대 (12px 0 -> 15px 0) */
+    padding: 15px 0; 
+    
+    background-color: var(--color-black);
+    color: var(--color-light-beige);
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-view-menu:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.btn-view-menu i {
+    font-size: 18px;
+    color: var(--color-light-beige);
+}
+
+/* ======================== */
+/* 2. 섹션 공통 스타일 (이하 동일) */
+/* (나머지 스타일은 이전과 동일하게 유지됩니다.) */
+/* ======================== */
+main {
+    padding-top: 65px; 
+}
+
+section {
+    padding: 80px 20px;
+    /* 요청 반영: 모든 섹션 컨테이너 최대 넓이 1440px로 수정 */
+    max-width: 1440px; 
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.menu-item {
+    text-align: center;
+    /* 🔴 수정: menu-item의 넓이를 170px로 설정 */
+    width: 170px;
+    overflow: visible; 
+}
+
+/* ======================== */
+/* 2. 서브페이지 공통 스타일 */
+/* ======================== */
+.subpage-content {
+    padding-top: 65px; /* 헤더 높이만큼 여백 */
+    background-color: var(--color-background);
+}
+.sub-section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+.sub-section-title {
+    font-size: 56px; /* 💥 수정: 텍스트 크기를 32px에서 56px로 증가 */
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--color-text);
+}
+
+/* ======================== */
+/* 3. FRANK MENU Section */
+/* ======================== */
+.section-frank-menu {
+    /* 첫 번째 섹션이므로 헤더 아래에서 바로 시작 */
+    padding-top: 100px;
+    background-color: #322D4C; /* 💥 수정: 배경색 변경 */
+    /* 기존의 max-width, margin 등은 .sub-section에 의해 유지 */
+    position: relative; /* 화살표의 위치를 잡기 위해 */
+    color: var(--color-white); /* 배경색 변경에 따라 텍스트 색상도 밝게 조정 */
+}
+/* sub-section-title도 배경색에 맞게 텍스트 색상 조정 (선택 사항) */
+.section-frank-menu .sub-section-title {
+    color: var(--color-white);
+}
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열 배치 */
+    gap: 30px; /* 💥 수정: 간격을 20px에서 30px로 증가 */
+    max-width: 1170px;
+    margin: 0 auto;
+}
+.menu-card {
+    background-color: #F8F8F8; /* 메뉴 카드 배경색 (이미지 기반 진한 보라/남색) */
+    border-radius: 12px;
+    overflow: hidden;
+    color: var(--color-white);
+    padding-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.menu-image-box {
+    /* 이미지 상단 배경색 (보라색) */
+    background-color: #8A2BE2; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding: 10px;  이미지를 채우기 위해 제거 또는 조정 가능 */
+    height: 180px;
+}
+
+.scroll-down-arrow {
+    text-align: center;
+    margin-top: 60px; /* 그리드 아래 여백 */
+    padding-bottom: 30px; /* 섹션 바닥과의 여백 */
+}
+.scroll-down-arrow a {
+    display: inline-flex; /* 아이콘을 위한 정렬 */
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--color-accent); /* 노란색 */
+    color: #ffffff; /* 화살표 색상 (배경색과 대비되게) */
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.scroll-down-arrow a:hover {
+    transform: translateY(5px); /* 호버 시 살짝 아래로 이동 */
+    background-color: darken(var(--color-accent), 10%); /* 호버 시 색상 어둡게 */
+}
+/* 부드러운 스크롤을 위한 CSS (선택 사항, JavaScript로도 가능) */
+html {
+    scroll-behavior: smooth;
+}
+
+.menu-img {
+    /* 💥 수정: 이미지가 박스에 꽉 채워지도록 수정 */
+    width: 100%; /* 박스 너비에 맞춤 */
+    height: 100%; /* 박스 높이에 맞춤 */
+    object-fit: cover; /* 이미지가 박스에 꽉 차도록 설정 */
+    opacity: 1; /* 목업 이미지 투명도를 제거하고 실제 이미지처럼 보이게 함 */
+}
+.menu-title {
+    font-size: 20px;
+    font-weight: 700;
+    padding: 15px 15px 5px;
+    color: #000;
+}
+.menu-detail {
+    font-size: 12px;
+    color: #808080;
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+.menu-price {
+    font-size: 18px;
+    font-weight: 900;
+    padding: 0 15px;
+    color: var(--color-accent); /* 노란색 가격 */
+}
+
+/* ======================== */
+/* 4. 배너 Section */
+/* ======================== */
+.section-banner {
+    padding: 0 0px; 
+    height: 400px; 
+    background-color: #0F3837; 
+    color: var(--color-white);
+    overflow: hidden;
+    position: relative;
+}
+.banner-content {
+    position: relative; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-img-mock {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    opacity: 1; /* 💥 수정: 불투명하게 보이도록 opacity를 1로 변경 */
+}
+
+
+/* ======================== */
+/* 5. SIDE Section */
+/* ======================== */
+.section-side {
+    padding: 80px 20px;
+    background-color: var(--color-background);
+}
+.side-title {
+    color: #444;
+}
+
+/* 💥 수정: 섹션 제목의 텍스트 크기를 56px로 지정 */
+.sub-section-title.side-title {
+    font-size: 56px; 
+    /* 기존의 font-weight, text-align 등은 .sub-section-title에서 상속받아 유지됩니다. */
+}
+
+.side-list-wrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.side-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 50px; /* 네비게이션 공간 확보 */
+}
+.side-card {
+    background-color: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* 💥 수정: 중앙 정렬 제거 또는 왼쪽 정렬로 변경 */
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
+    width: 250px;
+    padding: 20px 15px; /* 좌우 패딩을 추가하여 텍스트가 카드 가장자리에 붙지 않게 함 */
+}
+.side-image-box {
+/* ... (이미지 박스 스타일 유지) ... */
+    margin-bottom: 10px;
+    padding: 0 15px; /* 이미지 박스의 좌우 패딩도 통일 */
+}
+.side-img {
+    /* 💥 수정: 이미지가 박스를 꽉 채우고 불투명하게 보이도록 설정 */
+    width: 100%; /* 박스 너비에 맞춤 */
+    height: 100%; /* 박스 높이에 맞춤 */
+    object-fit: cover; /* 이미지가 박스 영역을 꽉 채우도록 설정 */
+    opacity: 1; /* 불투명하게 표시 (선명하게) */
+}
+
+.side-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.side-detail {
+    font-size: 12px;
+    color: #808080;
+    margin-bottom: 5px;
+}
+
+.side-price {
+    font-size: 18px;
+    font-weight: 900;
+    color: #000;
+    /* 💥 수정: 왼쪽 정렬 및 좌우 여백 추가 */
+    text-align: left; 
+    padding: 0 0px; 
+}
+
+/* 사이드 메뉴 내비게이션 */
+.side-nav-wrapper {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none; /* 버튼 외 영역 클릭 무시 */
+}
+
+.side-nav-wrapper button {
+    pointer-events: auto; /* 버튼만 클릭 가능 */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-nav-wrapper i {
+    font-size: 20px;
+}
+
+/* ======================== */
+/* 9. Footer */
+/* ======================== */
+.footer {
+    background-color: var(--color-white);
+    padding: 30px 20px;
+    border-top: 1px solid #eee;
+}
+
+.footer-inner {
+    /* 요청 반영: 로고와 정보를 왼쪽 끝으로 밀착시키기 위해 flex-start로 조정 */
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* links는 오른쪽 끝에 유지 */
+    align-items: flex-start; /* 상단 정렬 */
+    font-size: 14px;
+    color: var(--color-gray);
+    gap: 50px; /* 주요 섹션 (로고+정보 그룹)과 링크 사이 간격 */
+}
+
+/* 🔴 수정: 푸터 로고 이미지 스타일 */
+.footer-logo {
+    /* 기존 텍스트 스타일 제거 */
+    font-weight: 700;
+    color: var(--color-primary);
+    flex-shrink: 0; /* 축소 방지 */
+    margin-right: 20px; /* info와의 간격 (아래 info에서 마진을 제거하고 flex gap 사용) */
+}
+
+.footer-logo-img {
+    height: 30px; /* 로고 높이 설정 */
+    width: auto;
+    display: block;
+}
+
+/* 🔴 수정: 푸터 정보 스타일 (로고 가까이 붙도록) */
+.footer-info {
+    /* 로고 바로 옆에 붙도록 flex-shrink와 gap을 사용 */
+    flex-grow: 1; 
+    max-width: 600px; /* 정보 영역 최대 넓이 제한 (선택 사항) */
+}
+
+.footer-info p {
+    margin-bottom: 5px;
+}
+
+.footer-links {
+    flex-shrink: 0;
+    text-align: right;
+    margin-left: auto; /* 오른쪽 끝으로 밀기 */
+}
+
+.footer-links a {
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+}
